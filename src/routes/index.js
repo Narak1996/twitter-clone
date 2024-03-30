@@ -7,9 +7,6 @@ import RedirectingPage from "@/views/RedirectingPage.vue";
 
 const app_name = ' / X'
 const routes = [
-    {'path': '/redirect-auth', 'component': RedirectingPage, 'name': `Redirecting ${app_name}`},
-
-
     {'path': '/login', 'component': LoginPage, 'name': `Login ${app_name}`},
     {
         path: '/', 'component': HomePage, 'name': `Home  ${app_name}`,
@@ -18,6 +15,8 @@ const routes = [
             {'path': '/profile', 'component': ProfilePage, 'name': `Profile ${app_name}`},
         ],
     },
+    {'path': '/redirect-auth', 'component': RedirectingPage, 'name': `Redirecting ${app_name}`},
+
 ]
 
 const router = createRouter({
