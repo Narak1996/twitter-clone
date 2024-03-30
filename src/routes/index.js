@@ -5,7 +5,6 @@ import TwitPage from "@/views/TwitPage.vue";
 import ProfilePage from "@/views/ProfilePage.vue";
 import RedirectingPage from "@/views/RedirectingPage.vue";
 
-
 const app_name = ' / X'
 const routes = [
     {'path': '/redirect-auth', 'component': RedirectingPage, 'name': `Redirecting ${app_name}`},
