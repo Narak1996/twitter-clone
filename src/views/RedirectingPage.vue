@@ -32,9 +32,8 @@ export default defineComponent({
   }
 })
 </script>
-
 <template>
-  <div></div>
+  <div>Redirect</div>
 </template>
 
 <style scoped>
