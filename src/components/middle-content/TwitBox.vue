@@ -9,7 +9,7 @@
         <span class="font-bold">{{ twitItem.byUser.name }}</span>
         <span class="text-gray-400">&nbsp;{{ twitItem.byUser.username }} . {{diffFromNow(twitItem.createdDate)}}</span>
         <span class="float-end">
-          <twit-bottom-action><more-icon class="w-5 h-5 opacity-50"/></twit-bottom-action>
+          <twit-bottom-action data-tooltip-target="tooltip-default"><more-icon class="w-5 h-5 opacity-50"/></twit-bottom-action>
         </span>
       </div>
       <div class="text-sm">
@@ -32,23 +32,23 @@
           <like-icon v-if="twitItem.liked" class="w-5 h-5 opacity-50"/>
           <like-o-icon v-else class="w-5 h-5 opacity-50"/>
         </twit-bottom-action>
-        <twit-bottom-action :value="'24K'">
+        <twit-bottom-action :value="'0'"  data-tooltip-target="tt1">
           <view-icon class="w-5 h-5 opacity-50"/>
         </twit-bottom-action>
 
         <div class="flex">
-          <twit-bottom-action>
-            <share-icon :color="'primary'" class="w-5 h-5 opacity-50"/>
+          <twit-bottom-action data-tooltip-target="tt2">
+            <share-icon class="w-5 h-5 opacity-50"/>
           </twit-bottom-action>
-          <twit-bottom-action>
-            <book-mark-thin :color="'primary'" class="w-5 h-5 opacity-50"/>
+          <twit-bottom-action data-tooltip-target="tt3">
+            <book-mark-thin class="w-5 h-5 opacity-50"/>
           </twit-bottom-action>
         </div>
-
       </div>
     </div>
   </div>
 
+  <ToolTip v-for="ii in 3" :id="`tt${ii}`" :key="ii"><warning-icon class="w-5 h-5 opacity-50" /></ToolTip>
 </template>
 
 <script>
@@ -65,10 +65,14 @@ import LikeOIcon from "@/components/icons/LikeOIcon.vue";
 import ReTwitBox from "@/components/middle-content/ReTwitBox.vue";
 
 import moment from "moment";
+import ToolTip from "@/components/ToolTip.vue";
+import WarningIcon from "@/components/icons/WarningIcon.vue";
 
 export default defineComponent({
   name: "TwitBox",
   components: {
+    WarningIcon,
+    ToolTip,
     ReTwitBox,
     LikeOIcon,
     MoreIcon,

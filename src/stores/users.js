@@ -112,7 +112,7 @@ export const useUserStore = defineStore('user', {
             return res;
         },
         async register(user_obj) {
-            let data = await axios.post(base_url+`/users`, user_obj)
+            let data = await axios.post(base_url+`/auth/register`, user_obj)
             if (data.data.token) {
                 this.setAuthToken(data.data.token)
             }

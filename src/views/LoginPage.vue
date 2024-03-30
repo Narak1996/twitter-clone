@@ -165,6 +165,7 @@ import {useUserStore} from "@/stores/users";
 import {mapState} from "pinia";
 import ErrorText from "@/components/ErrorText.vue";
 import {getErrorMsg} from "@/helper/helper"
+import {base_url} from "@/constants/base";
 
 export default {
   name: "LoginPage",
@@ -262,7 +263,7 @@ export default {
       this.user_login_error = {}
     },
     signInWithGoogle() {
-      window.location.href = 'http://localhost:3000/api/auth/google-login'
+      window.location.href = `${base_url}/auth/google-login`
     }
   },
   computed: {
