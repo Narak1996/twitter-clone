@@ -263,7 +263,7 @@ export default {
       this.user_login_error = {}
     },
     signInWithGoogle() {
-      window.location.href = `${base_url}/auth/google-login`
+      window.location.href = `${base_url}/auth/google-login` // go google login
     }
   },
   computed: {
