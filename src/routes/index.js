@@ -16,7 +16,6 @@ const routes = [
         ],
     },
     {'path': '/redirect-auth', 'component': RedirectingPage, 'name': `Redirecting ${app_name}`},
-
 ]
 
 const router = createRouter({
