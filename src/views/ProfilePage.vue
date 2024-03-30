@@ -20,10 +20,13 @@ import CommentItem from "@/components/middle-content/CommentItem.vue";
 import BoxLight from "@/components/nav-right/BoxLight.vue";
 import TrendItemBox from "@/components/nav-right/TrendItemBox.vue";
 import InputFloat from "@/components/InputFloat.vue";
+import {dateFormat} from "@/helper/helper";
+import MyLoading from "@/components/MyLoading.vue";
 
 export default defineComponent({
   name: "ProfilePage",
   components: {
+    MyLoading,
     InputFloat,
     TrendItemBox, BoxLight, CommentItem, ReTwitBox, CommentTextarea,
     MyModal,
@@ -33,10 +36,11 @@ export default defineComponent({
   },
   data() {
     return {
-      myTwit: '',
+      myTwit: [],
       show_repost_modal: false,
       show_comment_modal: false,
       show_edit_profile: false,
+      isLoading : false,
       repost_post_id: 0,
       post_for_comment: {},
       update_user: {
@@ -47,21 +51,24 @@ export default defineComponent({
       }
     }
   },
+  async mounted() {
+    await this.getMyTwit()
+  },
   computed: {
     getCmt() {
       return this.getComments(this.post_for_comment.id)
     },
     ...mapState(useUserStore, ['auth_user']),
-    ...mapState(usePostStore, ['getMyPosts'])
   },
   methods: {
+    dateFormat,
     handleTwit(param) {
       this.addTwit(param)
     },
     handleLike(twit, ind) {
       return this.addLike(twit, ind)
     },
-    ...mapActions(useUserStore, ['updateProfile']),
+    ...mapActions(useUserStore, ['updateProfile','getMyTwits']),
     ...mapActions(usePostStore, ['addTwit', 'addLike', 'addRepost', 'addComment', 'getComments']),
     showRepostForm(twitItem) {
       this.repost_post_id = twitItem.id
@@ -111,6 +118,11 @@ export default defineComponent({
         dob: t.dob,
       };
       return this.show_edit_profile = true
+    },
+    async getMyTwit() {
+      this.isLoading = true
+      this.myTwit = await this.getMyTwits()
+      this.isLoading = false
     }
   },
 })
@@ -126,12 +138,13 @@ export default defineComponent({
       </div>
       <div class="">
         <div class="text-lg font-bold ">{{ auth_user.name }}</div>
-        <div class="text-sm">{{ getMyPosts.length }} posts</div>
+        <div class="text-sm">{{ myTwit.length }} posts</div>
       </div>
     </div>
     <div class="">
       <div class="z-10">
-        <img :src="auth_user.bg_image" class="w-full max-h-64 object-cover object-center " alt="">
+        <img :src="'https://source.unsplash.com/random/1200x800?great-view'"
+             class="w-full max-h-64 min-h-36 object-cover object-center border-b" alt="">
       </div>
       <div class="ms-5">
         <div class="flex z-20 w-full">
@@ -139,8 +152,7 @@ export default defineComponent({
             <img class="w-full" :src="auth_user.profile_img" alt="">
           </div>
           <div class="grow text-right place-self-center pe-3">
-            <button-default class=" w-min text-nowrap px-3" @click="showEditProfile()">Edit profile
-            </button-default>
+            <button-default class=" w-min text-nowrap px-3" @click="showEditProfile()">Edit profile</button-default>
           </div>
         </div>
         <div class="mt-5 space-y-3 text-gray-500">
@@ -157,7 +169,7 @@ export default defineComponent({
             <ProfileInfoItem :title="auth_user.location">
               <location-icon/>
             </ProfileInfoItem>
-            <ProfileInfoItem :title="auth_user.dob">
+            <ProfileInfoItem :title="dateFormat(auth_user.dob)">
               <birth-icon/>
             </ProfileInfoItem>
             <ProfileInfoItem :title="'Joined March 2015'">
@@ -182,14 +194,19 @@ export default defineComponent({
         </div>
       </div>
       <div class="mb-20">
-        <div v-if="getMyPosts.length">
-          <twit-box @showRepostForm="showRepostForm" @showCommentForm="showCommentForm"
-                    @addLike="handleLike(item,(getMyPosts.length - index-1))"
-                    v-for="(item,index) in getMyPosts.slice().reverse()" :key="index" :twit-item="item"/>
-        </div>
-        <div v-else>
-          <div class="w-full h-96 text-gray-300 font-bold text-xl border-b flex items-center justify-center">You dont
-            have any post yet.
+       <div v-if="isLoading">
+         <my-loading></my-loading>
+       </div>
+        <div class="border" v-else>
+          <div v-if="myTwit.length">
+            <twit-box @showRepostForm="showRepostForm" @showCommentForm="showCommentForm"
+                      @addLike="handleLike(item,index)"
+                      v-for="(item,index) in myTwit" :key="index" :twit-item="item"/>
+          </div>
+          <div v-else>
+            <div class="w-full h-96 text-gray-300 font-bold text-xl border-b flex items-center justify-center">You dont
+              have any post yet.
+            </div>
           </div>
         </div>
       </div>
@@ -215,7 +232,10 @@ export default defineComponent({
         <input-float :title="'Name'" :name="'name'" v-model="update_user.name"/>
         <input-float :title="'Bio'" :name="'bio'" v-model="update_user.bio"/>
         <input-float :title="'Location'" :name="'Location'" v-model="update_user.location"/>
-        <input-float :title="'Date of birth'" :name="'dob'" v-model="update_user.dob"/>
+        <div>
+          <small>Date of birth</small>
+          <vueDatePicker v-model="update_user.dob"/>
+        </div>
       </div>
       <div class="h-10"></div>
     </div>
@@ -244,8 +264,6 @@ export default defineComponent({
       </re-twit-box>
     </comment-textarea>
   </my-modal>
-
-
 </template>
 
 <style scoped>

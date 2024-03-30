@@ -41,12 +41,12 @@ export default defineComponent({
 <template>
     <div class="w-full hover:bg-gray-50 border-t p-3 pb-1 flex">
       <div class="w-12 rounded-full border h-min overflow-hidden">
-        <img :src="commentItem.user_image" alt="">
+        <img :src="commentItem.byUser.profile_img" alt="">
       </div>
       <div class="flex-initial w-full px-2">
         <div>
-          <span class="font-bold">{{ commentItem.name }}</span>
-          <span class="text-gray-400">&nbsp;{{ commentItem.username }} . {{ diffFromNow(commentItem.created_at) }}</span>
+          <span class="font-bold">{{ commentItem.byUser.name }}</span>
+          <span class="text-gray-400">&nbsp;{{ commentItem.byUser.username }} . {{ diffFromNow(commentItem.created_at) }}</span>
           <span class="float-end">
           <twit-bottom-action><more-icon class="w-5 h-5 opacity-50"/></twit-bottom-action>
         </span>

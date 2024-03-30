@@ -7,12 +7,12 @@ export default defineComponent({
   components: {ButtonPrimary},
 
   data(){
-    return {inputValue:''}
+    return {inputValue:{}}
   },
   methods:{
     handleSubmit(){
       const temp = this.inputValue;
-      this.inputValue = '';
+      this.inputValue = {};
       return this.$emit('handleSubmit',temp);
     }
   }
@@ -25,7 +25,7 @@ export default defineComponent({
       <div class="px-4 py-2 bg-white dark:bg-gray-800">
         <label for="comment" class="sr-only">Tweet</label>
         <textarea id="comment" rows="4" class="w-full px-0 text-xl text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
-                  placeholder="What is happening?!" v-model="inputValue" ></textarea>
+                  placeholder="What is happening?!" v-model="inputValue.text" ></textarea>
       </div>
       <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
         <button-primary :type="'submit'" class="px-5 sm:w-20">Post</button-primary>

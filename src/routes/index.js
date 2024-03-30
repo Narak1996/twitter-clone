@@ -3,10 +3,12 @@ import LoginPage from "@/views/LoginPage";
 import HomePage from "@/views/HomePage";
 import TwitPage from "@/views/TwitPage.vue";
 import ProfilePage from "@/views/ProfilePage.vue";
+import RedirectingPage from "@/views/RedirectingPage.vue";
 
 
 const app_name = ' / X'
 const routes = [
+    {'path': '/redirect-auth', 'component': RedirectingPage, 'name': `Redirecting ${app_name}`},
     {'path': '/login', 'component': LoginPage, 'name': `Login ${app_name}`},
     {
         path: '/', 'component': HomePage, 'name': `Home  ${app_name}`,
@@ -16,6 +18,7 @@ const routes = [
         ],
     },
 ]
+
 const router = createRouter({
     history: createWebHistory(),
     routes

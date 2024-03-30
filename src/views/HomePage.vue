@@ -147,24 +147,27 @@ export default {
   },
   data() {
     return {
-
+      auth_user:{}
     }
   },
   methods: {
-    ...mapActions(useUserStore, ['logMeOut']),
+    ...mapActions(useUserStore, ['logMeOut','getAuth']),
     handleLogout() {
       let data = this.logMeOut()
-      if (data.statusCode === 200) return this.$router.push('/')
-
+      if (data.statusCode === 200) return this.$router.push('/login')
     },
+    async getAuthUser(){
+      return this.auth_user = await this.getAuth()
+    }
 
   },
   computed: {
-    ...mapState(useUserStore, ['auth_user', 'users']), // get from auth_user state
-
+    ...mapState(useUserStore, ['auth_user','auth_token', 'users']), // get from auth_user state
   },
-  mounted() {
-    if (!this.auth_user.username) {
+  async created() {
+    const gg = await this.getAuthUser()
+
+    if (!gg.name) {
       return this.$router.push('/login')
     }
   },
