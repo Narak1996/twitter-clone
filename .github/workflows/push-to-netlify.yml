@@ -33,9 +33,7 @@ jobs:
         run: cd dist && echo '/*  /index.html  200' > _redirects
       - name: message
         run: echo "redirect created.."
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
+
       - name: Deploy to netlify
         uses: nwtgck/actions-netlify@v3.0
         with:
@@ -50,5 +48,5 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
       - name: message
-        run: echo "done build."
+        run: echo "done Deploy to Netlify."
 
