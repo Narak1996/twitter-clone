@@ -75,6 +75,7 @@ export default defineComponent({
       this.repost_post_id = twitItem._id
       return this.show_repost_modal = true
     },
+
     async showCommentForm(twitItem) {
       let t = this
       t.post_for_comment = twitItem
@@ -88,13 +89,6 @@ export default defineComponent({
         t.scrollBottom()
       }, 100)
     },
-    async handleRepost(caption) {
-      const data = await this.addRepost(caption, this.repost_post_id)
-      this.show_repost_modal = false
-      this.post_for_comment.number_of_repost = data.number_of_repost
-      await this.handleGetPost()
-      return data
-    },
     async handleAddComment(comment) {
       let t = this
       const data  = await t.addComment(comment, this.post_for_comment)
@@ -107,6 +101,13 @@ export default defineComponent({
         t.scrollBottom()
       },100)
       return data.data
+    },
+    async handleRepost(caption) {
+      const data = await this.addRepost(caption, this.repost_post_id)
+      this.show_repost_modal = false
+      this.post_for_comment.number_of_repost = data.number_of_repost
+      await this.handleGetPost()
+      return data
     },
     handleCloseModal(stat) {
       this.show_comment_modal = stat
