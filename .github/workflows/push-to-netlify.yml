@@ -20,12 +20,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - name: Install dependencies
-        run: npm install
-      - name: Build
-        run: npm run build
+      - name: npm install, build, and test
+        run: |
+          npm install
+          npm run build --if-present
+          npm run test --if-present
+      - name: message
+        run: echo "done build."
+  redirect:
+    runs-on: ubuntu-latest
+    steps:
       - name: Write redirect file
         run: cd dist && echo '/*  /index.html  200' > _redirects
+      - name: message
+        run: echo "redirect created.."
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to netlify
         uses: nwtgck/actions-netlify@v3.0
         with:
@@ -39,14 +50,6 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
-  otherJob:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Hello
-        run: echo "Hello there!"
-  lastJob:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Good bye
-        run: echo "Bye..."
+      - name: message
+        run: echo "done build."
 
