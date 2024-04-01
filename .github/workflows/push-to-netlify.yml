@@ -1,4 +1,4 @@
-name: First workflow
+name: Deploy to netlify
 
 on: # on event
   push: # event
