@@ -39,3 +39,14 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
+  otherJob:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hello
+        run: echo "Hello there!"
+  lastJob:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Good bye
+        run: echo "Bye..."
+
