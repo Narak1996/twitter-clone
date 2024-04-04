@@ -27,8 +27,8 @@ jobs:
       - name: run build
         run: npm run build --if-present
 
-        env:
-          NODE_ENV: prod
+        env: # Setup .env
+          NODE_ENV: prod #get env from github environment "prod"
           VUE_APP_ENV_BASE_URL: ${{ vars.VUE_APP_ENV_BASE_URL }}
 
       - name: run test
