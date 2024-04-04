@@ -227,7 +227,6 @@ export default {
       }
 
       const error = data.data.error;
-
       this.user_reg_error.name = await getErrorMsg(error, 'name')
       this.user_reg_error.email = await getErrorMsg(error, 'email')
       this.user_reg_error.dob = await getErrorMsg(error, 'dob')
