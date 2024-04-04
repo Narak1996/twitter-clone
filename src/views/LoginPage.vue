@@ -180,6 +180,7 @@ export default {
     if (gg.name) {
       return this.$router.push('/')
     }
+    console.log('url: '+process.env.VUE_APP_ENV_BASE_URL)
   },
   data() {
     return {
