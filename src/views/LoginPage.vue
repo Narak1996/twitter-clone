@@ -181,6 +181,7 @@ export default {
       return this.$router.push('/')
     }
     console.log('url: '+process.env.VUE_APP_ENV_BASE_URL)
+    console.log('env: '+process.env)
   },
   data() {
     return {
