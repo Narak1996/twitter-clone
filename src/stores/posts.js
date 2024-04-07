@@ -42,13 +42,23 @@ export const usePostStore = defineStore('post', {
 
         },
         async addTwit(obj) {
-            const data = await axios.post(`${base_url}/twits`, obj, {
-                headers: {
-                    Authorization: `Bearer ${useUserStore().auth_token}`
-                }
-            })
+            const formData = new FormData();
+            formData.append('image', obj.image);
+            formData.append('text', obj.text);
 
-            return {data, statusCode: 200}
+            const data =  await axios.post(`${base_url}/twits`, formData, {
+                headers: {
+                    Authorization: `Bearer ${useUserStore().auth_token}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(function (result) {
+                return {result, statusCode: 200}
+            }, function (error) {
+                console.log(`Error: ${error}`);
+            });
+            return {data:data.data, statusCode: 200}
+
+
         },
         async addLike(twit) {
             let data = await axios.post(`${base_url}/twits/${twit._id}/like`, {}, useUserStore().authHeader)

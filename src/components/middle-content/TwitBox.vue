@@ -19,7 +19,7 @@
         <div class="" v-if="twitItem.repost_id">
           <re-twit-box :twitId="twitItem.repost_id"></re-twit-box>
         </div>
-        <img v-else :src="twitItem.image" class="w-full rounded-2xl object-cover object-center max-h-96 lg:max-h-[500px]" alt="">
+        <img v-else v-bind:src="twitItem.image" class="w-full rounded-2xl object-cover object-center max-h-96 lg:max-h-[500px]" alt="">
       </div>
       <div class="mt-1 flex justify-between text-sm">
         <twit-bottom-action :value="twitItem.number_of_comments??'0'">
