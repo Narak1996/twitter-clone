@@ -67,6 +67,7 @@ import ReTwitBox from "@/components/middle-content/ReTwitBox.vue";
 import moment from "moment";
 import ToolTip from "@/components/ToolTip.vue";
 import WarningIcon from "@/components/icons/WarningIcon.vue";
+import {base_url} from "@/constants/base";
 
 export default defineComponent({
   name: "TwitBox",
@@ -86,6 +87,9 @@ export default defineComponent({
     return {twitData:null}
   },
   methods: {
+    base_url() {
+      return base_url.replace('/api','/')
+    },
     diffFromNow(date){
       return moment(date).fromNow()
     },
